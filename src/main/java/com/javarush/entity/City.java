@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -18,16 +19,16 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "city_id")
-    private Long id;
+    private Short id;
 
     @Column(length = 50)
     private String city;
 
-    //todo
-    @Column(name = "city_id")
-    private Long countryId;
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
 
     @UpdateTimestamp
     @Column(name = "last_update")
-    private Timestamp lastUpdate;
+    private LocalDateTime lastUpdate;
 }

@@ -21,11 +21,11 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
-    private Long id;
+    private Short id;
 
-    //todo
-    @Column(name = "store_id")
-    private Long storeId;
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
 
     @Column(name = "first_name", length = 45)
     private String firstName;
@@ -36,13 +36,13 @@ public class Customer {
     @Column(length = 50)
     private String email;
 
-    //todo
-    @Column(name = "address_id")
-    private Long addressId;
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
-    @Column
+    @Column(name = "active",columnDefinition = "BIT")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private Boolean active;
+    private Boolean isActive;
 
     @CreationTimestamp
     @Column(name = "create_date")
@@ -50,5 +50,5 @@ public class Customer {
 
     @UpdateTimestamp
     @Column(name = "last_update")
-    private Timestamp lastUpdate;
+    private LocalDateTime lastUpdate;
 }

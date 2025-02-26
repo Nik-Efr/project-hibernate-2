@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -18,12 +19,12 @@ public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "language_id")
-    private Long id;
+    private Byte id;
 
-    @Column(length = 20)
+    @Column(columnDefinition = "char",length = 20)
     private String name;
 
     @UpdateTimestamp
     @Column(name = "last_update")
-    private Timestamp lastUpdate;
+    private LocalDateTime lastUpdate;
 }

@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -17,18 +18,18 @@ public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "inventory_id")
-    private Long id;
+    private Integer id;
 
-    //todo
-    @Column(name = "film_id")
-    private Long filmId;
+    @ManyToOne
+    @JoinColumn(name = "film_id")
+    private Film film;
 
-    //todo
-    @Column(name = "store_id")
-    private Long storeId;
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
 
     @UpdateTimestamp
     @Column(name = "last_update")
-    private Timestamp lastUpdate;
+    private LocalDateTime lastUpdate;
 
 }

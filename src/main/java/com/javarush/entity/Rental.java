@@ -19,27 +19,27 @@ public class Rental {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rental_id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "rental_date")
     private LocalDateTime rentalDate;
 
-    //todo
-    @Column(name = "inventory_id")
-    private Long inventoryId;
+    @ManyToOne
+    @JoinColumn(name = "inventory_id")
+    private Inventory inventory;
 
-    //todo
-    @Column(name = "customer_id")
-    private Long customerId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @Column(name = "return_date")
     private LocalDateTime returnDate;
 
-    //todo
-    @Column(name = "staff_id")
-    private Long staffId;
+    @ManyToOne
+    @JoinColumn(name = "staff_id")
+    private Staff staff;
 
     @UpdateTimestamp
     @Column(name = "last_update")
-    private Timestamp lastUpdate;
+    private LocalDateTime lastUpdate;
 }

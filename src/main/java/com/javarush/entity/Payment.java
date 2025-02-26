@@ -3,8 +3,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.security.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,27 +20,27 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
-    private Long id;
+    private Short id;
 
-    //todo
-    @Column(name = "customer_id")
-    private Long customerId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customers;
 
-    //todo
-    @Column(name = "staff_id")
-    private Long staffId;
+    @ManyToOne
+    @JoinColumn(name = "staff_id")
+    private Staff staff;
 
-    //todo
-    @Column(name = "rental_id")
-    private Long rentalId;
+    @OneToOne
+    @JoinColumn(name = "rental_id")
+    private Rental rental;
 
     @Column(precision = 5,scale = 2)
-    private Double amount;
+    private BigDecimal amount;
 
     @Column(name = "payment_date")
     private LocalDateTime paymentDate;
 
     @UpdateTimestamp
     @Column(name = "last_update")
-    private Timestamp lastUpdate;
+    private LocalDateTime lastUpdate;
 }

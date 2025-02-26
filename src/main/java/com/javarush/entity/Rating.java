@@ -3,7 +3,7 @@ package com.javarush.entity;
 public enum Rating {
     G,
     PG,
-    PG_13("PG-13"), // Используем символ подчеркивания для имени
+    PG_13("PG-13"),
     R,
     NC_17("NC-17");
 

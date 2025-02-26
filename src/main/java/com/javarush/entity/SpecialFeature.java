@@ -5,4 +5,5 @@ public enum SpecialFeature {
     COMMENTARIES,
     DELETED_SCENES,
     BEHIND_THE_SCENES;
+
 }

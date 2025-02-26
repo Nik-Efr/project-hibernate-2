@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.security.Timestamp;
 import java.sql.Blob;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -19,7 +20,7 @@ public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "staff_id")
-    private Long id;
+    private Byte id;
 
     @Column(name = "first_name", length = 45)
     private String firstName;
@@ -27,24 +28,24 @@ public class Staff {
     @Column(name = "last_name", length = 45)
     private String lastName;
 
-    //todo
-    @Column(name = "address_id")
-    private Long addressId;
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @Lob
-    @Column
+    @Column(columnDefinition = "BLOB")
     private Blob picture;
 
     @Column(length = 50)
     private String email;
 
-    //todo
-    @Column(name = "store_id")
-    private Long storeId;
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
 
-    @Column
+    @Column(name = "active",columnDefinition = "BIT")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private Boolean active;
+    private Boolean isActive;
 
     @Column(length = 16)
     private String username;
@@ -54,5 +55,5 @@ public class Staff {
 
     @UpdateTimestamp
     @Column(name = "last_update")
-    private Timestamp lastUpdate;
+    private LocalDateTime lastUpdate;
 }
