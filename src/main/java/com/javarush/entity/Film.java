@@ -2,20 +2,19 @@ package com.javarush.entity;
 
 
 import com.javarush.entity.convertor.RatingConverter;
-import com.javarush.entity.convertor.SpecialFeaturesConverter;
-import com.mysql.cj.protocol.ColumnDefinition;
+import com.javarush.entity.convertor.YearConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.boot.model.source.spi.IdentifierSource;
 
 import java.math.BigDecimal;
-import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Year;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -38,8 +37,9 @@ public class Film {
     @Type(type = "text")
     private String description;
 
-    //todo convert
+
     @Column(name = "release_year",columnDefinition = "year")
+    @Convert(converter = YearConverter.class)
     private Year year;
 
     @ManyToOne
@@ -66,8 +66,7 @@ public class Film {
     private Rating rating;
 
     @Column(name = "special_features",columnDefinition = "set('Trailers', 'Commentaries', 'Deleted Scenes', 'Behind the Scenes')")
-    @Convert(converter = SpecialFeaturesConverter.class)
-    private Set<SpecialFeature> specialFeatures;
+    private String specialFeatures;
 
     @UpdateTimestamp
     @Column(name = "last_update")
@@ -86,4 +85,24 @@ public class Film {
             inverseJoinColumns = @JoinColumn(name = "category_id",referencedColumnName = "category_id")
     )
     List<Category> categories;
+
+    public Set<SpecialFeature> getSpecialFeatures() {
+        if (specialFeatures == null || specialFeatures.isEmpty()){
+            return null;
+        }
+        Set<SpecialFeature> set = new HashSet<SpecialFeature>();
+        for (String feature : specialFeatures.split(",")){
+            set.add(SpecialFeature.valueOf(feature.trim()));
+        }
+        return set;
+    }
+
+    public void setSpecialFeatures(Set<SpecialFeature> specialFeatures) {
+        if (specialFeatures == null){
+            this.specialFeatures = null;
+            return;
+        }else{
+            this.specialFeatures = specialFeatures.stream().map(SpecialFeature::getValue).collect(Collectors.joining(","));
+        }
+    }
 }

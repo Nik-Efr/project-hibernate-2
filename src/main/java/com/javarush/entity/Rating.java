@@ -1,32 +1,19 @@
 package com.javarush.entity;
 
 public enum Rating {
-    G,
-    PG,
+    G("G"),
+    PG("PG"),
     PG_13("PG-13"),
-    R,
+    R("R"),
     NC_17("NC-17");
 
-    private final String displayName;
+    private final String value;
 
-    Rating() {
-        this.displayName = name();
+    Rating(String value) {
+        this.value = value;
     }
 
-    Rating(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public static Rating fromDisplayName(String displayName) {
-        for (Rating rating : values()) {
-            if (rating.getDisplayName().equals(displayName)) {
-                return rating;
-            }
-        }
-        throw new IllegalArgumentException("Unknown display name: " + displayName);
+    public String getValue() {
+        return value;
     }
 }
